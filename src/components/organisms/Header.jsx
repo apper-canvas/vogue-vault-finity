@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 import ApperIcon from "@/components/ApperIcon";
 import Badge from "@/components/atoms/Badge";
 import SearchBar from "@/components/molecules/SearchBar";
 import { useCart } from "@/hooks/useCart";
 import { useWishlist } from "@/hooks/useWishlist";
-
+import { useAuth } from "@/hooks/useAuth";
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const { getCartCount } = useCart();
   const { wishlist } = useWishlist();
+  const { user, logout } = useAuth();
   const cartCount = getCartCount();
 
   const navItems = [
@@ -22,6 +25,17 @@ const Header = () => {
     { label: "Accessories", path: "/category/accessories" },
     { label: "Sale", path: "/sale" }
   ];
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setAccountDropdownOpen(false);
+      toast.success("Logged out successfully");
+      navigate("/");
+    } catch (error) {
+      toast.error("Failed to logout");
+    }
+  };
 
   return (
     <>
@@ -49,7 +63,7 @@ const Header = () => {
             </nav>
 
             {/* Actions */}
-            <div className="flex items-center gap-4">
+<div className="flex items-center gap-4">
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
                 className="p-2 text-primary hover:text-accent transition-colors duration-200"
@@ -86,6 +100,87 @@ const Header = () => {
                   </Badge>
                 )}
               </button>
+
+              <div className="relative hidden lg:block">
+                <button
+                  onClick={() => setAccountDropdownOpen(!accountDropdownOpen)}
+                  className="p-2 text-primary hover:text-accent transition-colors duration-200"
+                >
+                  <ApperIcon name="User" size={22} />
+                </button>
+
+                <AnimatePresence>
+                  {accountDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-secondary py-2 z-50"
+                    >
+                      {user ? (
+                        <>
+                          <div className="px-4 py-2 border-b border-secondary">
+                            <p className="font-semibold text-primary">
+                              {user.firstName} {user.lastName}
+                            </p>
+                            <p className="text-sm text-primary/60">{user.email}</p>
+                          </div>
+                          <Link
+                            to="/account"
+                            onClick={() => setAccountDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2 hover:bg-secondary transition-colors"
+                          >
+                            <ApperIcon name="LayoutDashboard" size={18} />
+                            <span>Dashboard</span>
+                          </Link>
+                          <Link
+                            to="/orders"
+                            onClick={() => setAccountDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2 hover:bg-secondary transition-colors"
+                          >
+                            <ApperIcon name="Package" size={18} />
+                            <span>Orders</span>
+                          </Link>
+                          <Link
+                            to="/profile"
+                            onClick={() => setAccountDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2 hover:bg-secondary transition-colors"
+                          >
+                            <ApperIcon name="Settings" size={18} />
+                            <span>Profile</span>
+                          </Link>
+                          <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-3 px-4 py-2 hover:bg-secondary transition-colors w-full text-left border-t border-secondary mt-2 pt-2"
+                          >
+                            <ApperIcon name="LogOut" size={18} />
+                            <span>Logout</span>
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Link
+                            to="/login"
+                            onClick={() => setAccountDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2 hover:bg-secondary transition-colors"
+                          >
+                            <ApperIcon name="LogIn" size={18} />
+                            <span>Login</span>
+                          </Link>
+                          <Link
+                            to="/register"
+                            onClick={() => setAccountDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2 hover:bg-secondary transition-colors"
+                          >
+                            <ApperIcon name="UserPlus" size={18} />
+                            <span>Register</span>
+                          </Link>
+                        </>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -139,7 +234,7 @@ const Header = () => {
                 >
                   <ApperIcon name="X" size={24} />
                 </button>
-                <nav className="mt-12 space-y-6">
+<nav className="mt-12 space-y-6">
                   {navItems.map((item) => (
                     <Link
                       key={item.path}
@@ -151,6 +246,72 @@ const Header = () => {
                     </Link>
                   ))}
                 </nav>
+
+                <div className="mt-8 pt-8 border-t border-secondary space-y-4">
+                  {user ? (
+                    <>
+                      <div className="px-4 py-2 bg-secondary rounded-lg">
+                        <p className="font-semibold text-primary">
+                          {user.firstName} {user.lastName}
+                        </p>
+                        <p className="text-sm text-primary/60">{user.email}</p>
+                      </div>
+                      <Link
+                        to="/account"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 text-lg font-medium text-primary hover:text-accent transition-colors"
+                      >
+                        <ApperIcon name="LayoutDashboard" size={20} />
+                        <span>Dashboard</span>
+                      </Link>
+                      <Link
+                        to="/orders"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 text-lg font-medium text-primary hover:text-accent transition-colors"
+                      >
+                        <ApperIcon name="Package" size={20} />
+                        <span>Orders</span>
+                      </Link>
+                      <Link
+                        to="/profile"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 text-lg font-medium text-primary hover:text-accent transition-colors"
+                      >
+                        <ApperIcon name="Settings" size={20} />
+                        <span>Profile</span>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="flex items-center gap-3 text-lg font-medium text-primary hover:text-accent transition-colors"
+                      >
+                        <ApperIcon name="LogOut" size={20} />
+                        <span>Logout</span>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/login"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 text-lg font-medium text-primary hover:text-accent transition-colors"
+                      >
+                        <ApperIcon name="LogIn" size={20} />
+                        <span>Login</span>
+                      </Link>
+                      <Link
+                        to="/register"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 text-lg font-medium text-primary hover:text-accent transition-colors"
+                      >
+                        <ApperIcon name="UserPlus" size={20} />
+                        <span>Register</span>
+                      </Link>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </motion.div>

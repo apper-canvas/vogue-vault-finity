@@ -6,10 +6,12 @@ import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Select from "@/components/atoms/Select";
 import { useCart } from "@/hooks/useCart";
-
+import { useAuth } from "@/hooks/useAuth";
+import orderService from "@/services/api/orderService";
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const { cart, getCartTotal, clearCart } = useCart();
+  const { user } = useAuth();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -35,7 +37,7 @@ const CheckoutPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (step === 1) {
@@ -49,10 +51,32 @@ const CheckoutPage = () => {
       
       setStep(2);
     } else {
-      const orderId = `VO${Date.now().toString().slice(-8)}`;
-      clearCart();
-      toast.success("Order placed successfully!");
-      navigate("/", { state: { orderId } });
+      try {
+        const orderData = {
+          items: cart,
+          subtotal,
+          shipping,
+          tax,
+          total,
+          shippingAddress: formData
+        };
+
+        if (user) {
+          await orderService.createOrder(orderData);
+        }
+
+        const orderId = `VO${Date.now().toString().slice(-8)}`;
+        clearCart();
+        toast.success("Order placed successfully!");
+        
+        if (user) {
+          navigate("/orders");
+        } else {
+          navigate("/", { state: { orderId } });
+        }
+      } catch (error) {
+        toast.error("Failed to process order. Please try again.");
+      }
     }
   };
 

@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import ApperIcon from "@/components/ApperIcon";
 
 const Footer = () => {
-  const quickLinks = [
+const quickLinks = [
     { label: "About Us", path: "/about" },
     { label: "Contact", path: "/contact" },
+    { label: "Account", path: "/account" },
     { label: "Shipping Policy", path: "/shipping" },
     { label: "Returns", path: "/returns" }
   ];

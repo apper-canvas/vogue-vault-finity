@@ -70,8 +70,12 @@ export const useCart = () => {
   };
 
   const clearCart = () => {
-    setCart([]);
+setCart([]);
     cartStorage.clear();
+  };
+
+  const getCart = () => {
+    return cart;
   };
 
   const getCartTotal = () => {
@@ -82,12 +86,13 @@ export const useCart = () => {
     return cart.reduce((count, item) => count + item.quantity, 0);
   };
 
-  return {
+return {
     cart,
     addToCart,
     removeFromCart,
     updateQuantity,
     clearCart,
+    getCart,
     getCartTotal,
     getCartCount
   };
