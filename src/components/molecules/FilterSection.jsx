@@ -20,10 +20,16 @@ const FilterSection = ({ title, options, selected, onChange, type = "checkbox" }
         {title}
       </h3>
       <div className="space-y-2">
-        {options.map((option) => (
+{options.map((option) => (
           <label
             key={option.value}
             className="flex items-center gap-3 cursor-pointer group"
+            onClick={() => {
+              const newSelected = selected.includes(option.value)
+                ? selected.filter(v => v !== option.value)
+                : [...selected, option.value];
+              onChange(newSelected);
+            }}
           >
             <div
               className={cn(
