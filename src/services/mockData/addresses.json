@@ -1,0 +1,38 @@
+[
+  {
+    "Id": 1,
+    "userId": 1,
+    "firstName": "Sarah",
+    "lastName": "Johnson",
+    "address": "123 Fashion Avenue",
+    "city": "New York",
+    "state": "NY",
+    "zipCode": "10001",
+    "country": "United States",
+    "isDefault": true
+  },
+  {
+    "Id": 2,
+    "userId": 1,
+    "firstName": "Sarah",
+    "lastName": "Johnson",
+    "address": "456 Style Street",
+    "city": "Brooklyn",
+    "state": "NY",
+    "zipCode": "11201",
+    "country": "United States",
+    "isDefault": false
+  },
+  {
+    "Id": 3,
+    "userId": 2,
+    "firstName": "Michael",
+    "lastName": "Chen",
+    "address": "789 Trend Boulevard",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zipCode": "90001",
+    "country": "United States",
+    "isDefault": true
+  }
+]

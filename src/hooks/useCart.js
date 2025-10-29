@@ -10,7 +10,7 @@ export const useCart = () => {
   }, []);
 
   const addToCart = (product, size, color, quantity = 1) => {
-    const existingItemIndex = cart.findIndex(
+const existingItemIndex = cart.findIndex(
       (item) =>
         item.productId === product.Id &&
         item.size === size &&
@@ -23,13 +23,13 @@ export const useCart = () => {
       newCart[existingItemIndex].quantity += quantity;
     } else {
       const newItem = {
-        productId: product.Id,
-        name: product.name,
-        price: product.price,
+productId: product.Id,
+        name: product.name || product.name_c,
+        price: product.price || product.price_c,
         quantity,
         size,
         color,
-        image: product.images[0]
+        image: product.images?.[0] || product.images_c?.[0]
       };
       newCart = [...cart, newItem];
     }
@@ -59,7 +59,7 @@ export const useCart = () => {
     }
 
     const newCart = cart.map((item) =>
-      item.productId === productId &&
+item.productId === productId &&
       item.size === size &&
       item.color === color
         ? { ...item, quantity }

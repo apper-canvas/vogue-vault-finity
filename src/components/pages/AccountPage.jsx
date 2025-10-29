@@ -1,29 +1,32 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
 import { useAuth } from "@/hooks/useAuth";
 import orderService from "@/services/api/orderService";
+import ApperIcon from "@/components/ApperIcon";
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
+import Loading from "@/components/ui/Loading";
+import Error from "@/components/ui/Error";
 
 const AccountPage = () => {
-  const { user } = useAuth();
+const { user } = useSelector((state) => state.user);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    loadOrders();
-  }, []);
+    if (user?.Id) {
+      loadOrders();
+    }
+  }, [user]);
 
   const loadOrders = async () => {
     try {
       setLoading(true);
       setError(null);
-      const userOrders = await orderService.getUserOrders();
+      const userOrders = await orderService.getUserOrders(user.Id);
       setOrders(userOrders.slice(0, 3));
     } catch (err) {
       setError(err.message);
@@ -49,7 +52,7 @@ const AccountPage = () => {
             My Account
           </h1>
           <p className="text-primary/60">
-            Welcome back, {user?.firstName || "Valued Customer"}!
+Welcome back, {user?.first_name_c || "Valued Customer"}!
           </p>
         </div>
 
@@ -84,14 +87,14 @@ const AccountPage = () => {
                 <div className="space-y-4">
                   {orders.map((order) => (
                     <Link
-                      key={order.Id}
+key={order.Id}
                       to={`/orders`}
                       className="block border border-secondary rounded-lg p-4 hover:border-accent transition-colors duration-200"
                     >
                       <div className="flex items-center justify-between mb-3">
                         <div>
                           <p className="font-semibold text-primary">
-                            Order #{order.orderNumber}
+Order #{order.orderNumber}
                           </p>
                           <p className="text-sm text-primary/60">
                             {new Date(order.createdAt).toLocaleDateString()}
@@ -111,10 +114,10 @@ const AccountPage = () => {
                       </div>
                       <div className="flex items-center justify-between">
                         <p className="text-primary/60">
-                          {order.items.length} item(s)
+{order.items?.length || 0} item(s)
                         </p>
                         <p className="font-semibold text-accent">
-                          ${order.total.toFixed(2)}
+                          ${order.total?.toFixed(2)}
                         </p>
                       </div>
                     </Link>
@@ -133,17 +136,17 @@ const AccountPage = () => {
                 <div>
                   <p className="text-sm">Name</p>
                   <p className="font-medium text-primary">
-                    {user?.firstName} {user?.lastName}
+{user?.first_name_c} {user?.last_name_c}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm">Email</p>
-                  <p className="font-medium text-primary">{user?.email}</p>
+                  <p className="font-medium text-primary">{user?.email_c}</p>
                 </div>
-                {user?.phone && (
+                {user?.phone_c && (
                   <div>
                     <p className="text-sm">Phone</p>
-                    <p className="font-medium text-primary">{user.phone}</p>
+                    <p className="font-medium text-primary">{user.phone_c}</p>
                   </div>
                 )}
               </div>

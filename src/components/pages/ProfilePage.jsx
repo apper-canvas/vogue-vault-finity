@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import userService from "@/services/api/userService";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
-import { useAuth } from "@/hooks/useAuth";
-import userService from "@/services/api/userService";
 
 const ProfilePage = () => {
-  const { user } = useAuth();
+const { user } = useSelector((state) => state.user);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -23,14 +23,16 @@ const ProfilePage = () => {
   });
 
   useEffect(() => {
-    loadProfile();
-  }, []);
+    if (user?.Id) {
+      loadProfile();
+    }
+  }, [user]);
 
   const loadProfile = async () => {
     try {
       setLoading(true);
       setError(null);
-      const userProfile = await userService.getProfile();
+      const userProfile = await userService.getProfile(user.Id);
       setProfile(userProfile);
       setFormData({
         firstName: userProfile.firstName || "",
@@ -53,7 +55,7 @@ const ProfilePage = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.firstName || !formData.lastName || !formData.email) {
@@ -64,7 +66,7 @@ const ProfilePage = () => {
     setSaving(true);
 
     try {
-      const updatedProfile = await userService.updateProfile(formData);
+      const updatedProfile = await userService.updateProfile(user.Id, formData);
       setProfile(updatedProfile);
       setIsEditing(false);
       toast.success("Profile updated successfully!");
@@ -75,7 +77,7 @@ const ProfilePage = () => {
     }
   };
 
-  const handleCancel = () => {
+const handleCancel = () => {
     setFormData({
       firstName: profile.firstName || "",
       lastName: profile.lastName || "",
@@ -116,7 +118,7 @@ const ProfilePage = () => {
                   <label className="text-sm text-primary/60 block mb-2">
                     First Name
                   </label>
-                  <p className="text-lg font-medium text-primary">
+<p className="text-lg font-medium text-primary">
                     {profile.firstName}
                   </p>
                 </div>
@@ -148,43 +150,11 @@ const ProfilePage = () => {
                 </p>
               </div>
 
-              {profile.addresses && profile.addresses.length > 0 && (
-                <div>
-                  <label className="text-sm text-primary/60 block mb-3">
-                    Saved Addresses
-                  </label>
-                  <div className="space-y-3">
-                    {profile.addresses.map((address) => (
-                      <div
-                        key={address.Id}
-                        className="border border-secondary rounded-lg p-4"
-                      >
-                        <div className="flex items-start justify-between mb-2">
-                          <p className="font-semibold text-primary">
-                            {address.firstName} {address.lastName}
-                          </p>
-                          {address.isDefault && (
-                            <span className="text-xs bg-accent/10 text-accent px-2 py-1 rounded">
-                              Default
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-primary/60 text-sm">
-                          <p>{address.address}</p>
-                          <p>
-                            {address.city}, {address.state} {address.zipCode}
-                          </p>
-                          <p>{address.country}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               )}
 
               <div className="pt-4 border-t border-secondary">
                 <p className="text-sm text-primary/60">
-                  Member since{" "}
+Member since{" "}
                   {new Date(profile.createdAt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
