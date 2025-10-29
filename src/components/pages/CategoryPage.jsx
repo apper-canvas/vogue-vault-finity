@@ -179,10 +179,10 @@ const clearFilters = () => {
     materials: []
   });
 
-  useEffect(() => {
+useEffect(() => {
     const loadFilterOptions = async () => {
       try {
-        const options = await productService.getUniqueFilterValues();
+        const options = await productService.getFilters();
         setFilterOptions(options);
       } catch (error) {
         console.error("Failed to load filter options:", error);
