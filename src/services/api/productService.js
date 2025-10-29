@@ -1,4 +1,3 @@
-import React from "react";
 import { getApperClient } from "@/services/apperClient";
 
 const parseMultiPicklist = (value) => {
@@ -156,7 +155,7 @@ const productService = {
     }
   },
 
-  getFeatured: async () => {
+getFeatured: async () => {
     try {
       const apperClient = getApperClient();
       const response = await apperClient.fetchRecords('product_c', {
@@ -196,7 +195,7 @@ const productService = {
     }
   },
 
-  getTrending: async () => {
+getTrending: async () => {
     try {
       const apperClient = getApperClient();
       const response = await apperClient.fetchRecords('product_c', {
@@ -218,7 +217,7 @@ const productService = {
           {"field": {"Name": "featured_c"}},
           {"field": {"Name": "trending_c"}}
         ],
-where: [{
+        where: [{
           FieldName: "trending_c",
           Operator: "EqualTo",
           Values: [true]
@@ -228,6 +227,7 @@ where: [{
       if (!response.success) {
         throw new Error(response.message);
       }
+
       return (response.data || []).map(transformProduct);
     } catch (error) {
       console.error("Error fetching trending products:", error);
@@ -235,7 +235,8 @@ where: [{
     }
   },
 
-  search: async (query) => {
+
+search: async (query) => {
     try {
       const apperClient = getApperClient();
       const response = await apperClient.fetchRecords('product_c', {
@@ -299,7 +300,9 @@ where: [{
     }
   },
 
-  getUniqueFilterValues: async () => {
+
+
+getFilters: async () => {
     try {
       const apperClient = getApperClient();
       const response = await apperClient.fetchRecords('product_c', {
@@ -357,6 +360,7 @@ where: [{
       };
     }
   }
+
 };
 
 export default productService;
