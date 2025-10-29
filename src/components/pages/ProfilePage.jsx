@@ -110,52 +110,51 @@ const handleCancel = () => {
           )}
         </div>
 
-        <div className="bg-white rounded-lg p-8">
+<div className="bg-white rounded-lg p-8">
           {!isEditing ? (
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="text-sm text-primary/60 block mb-2">
-                    First Name
-                  </label>
-<p className="text-lg font-medium text-primary">
-                    {profile.firstName}
-                  </p>
+            <>
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="text-sm text-primary/60 block mb-2">
+                      First Name
+                    </label>
+                    <p className="text-lg font-medium text-primary">
+                      {profile.firstName}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm text-primary/60 block mb-2">
+                      Last Name
+                    </label>
+                    <p className="text-lg font-medium text-primary">
+                      {profile.lastName}
+                    </p>
+                  </div>
                 </div>
+
                 <div>
                   <label className="text-sm text-primary/60 block mb-2">
-                    Last Name
+                    Email
                   </label>
                   <p className="text-lg font-medium text-primary">
-                    {profile.lastName}
+                    {profile.email}
+                  </p>
+                </div>
+
+                <div>
+                  <label className="text-sm text-primary/60 block mb-2">
+                    Phone
+                  </label>
+                  <p className="text-lg font-medium text-primary">
+                    {profile.phone || "Not provided"}
                   </p>
                 </div>
               </div>
-
-              <div>
-                <label className="text-sm text-primary/60 block mb-2">
-                  Email
-                </label>
-                <p className="text-lg font-medium text-primary">
-                  {profile.email}
-                </p>
-              </div>
-
-              <div>
-                <label className="text-sm text-primary/60 block mb-2">
-                  Phone
-                </label>
-                <p className="text-lg font-medium text-primary">
-                  {profile.phone || "Not provided"}
-                </p>
-              </div>
-{/* SYNTAX ERROR: This closing structure may be incomplete or mismatched. 
-                  Full component context needed to resolve properly. */}
-              )}
 
               <div className="pt-4 border-t border-secondary">
                 <p className="text-sm text-primary/60">
-Member since{" "}
+                  Member since{" "}
                   {new Date(profile.createdAt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
@@ -163,7 +162,7 @@ Member since{" "}
                   })}
                 </p>
               </div>
-            </div>
+            </>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
