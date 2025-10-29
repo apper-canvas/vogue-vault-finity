@@ -1,4 +1,6 @@
+import React from "react";
 import { getApperClient } from "@/services/apperClient";
+import Error from "@/components/ui/Error";
 
 const parseMultiPicklist = (value) => {
   if (!value) return [];
@@ -217,17 +219,17 @@ const productService = {
           {"field": {"Name": "featured_c"}},
           {"field": {"Name": "trending_c"}}
         ],
-        where: [{
+where: [{
           FieldName: "trending_c",
           Operator: "EqualTo",
           Values: [true]
         }]
+}]
       });
 
       if (!response.success) {
         throw new Error(response.message);
       }
-
       return (response.data || []).map(transformProduct);
     } catch (error) {
       console.error("Error fetching trending products:", error);
