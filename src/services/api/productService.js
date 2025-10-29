@@ -224,7 +224,6 @@ where: [{
           Operator: "EqualTo",
           Values: [true]
         }]
-}]
       });
 
       if (!response.success) {
