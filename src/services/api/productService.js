@@ -5,7 +5,6 @@ const parseMultiPicklist = (value) => {
   if (Array.isArray(value)) return value;
   return value.split(',').map(v => v.trim()).filter(Boolean);
 };
-
 const parseImages = (value) => {
   if (!value) return [];
   if (Array.isArray(value)) return value;
@@ -41,7 +40,7 @@ const transformProduct = (product) => {
 };
 
 const productService = {
-  getAll: async () => {
+getAll: async () => {
     try {
       const apperClient = getApperClient();
       const response = await apperClient.fetchRecords('product_c', {
@@ -76,7 +75,7 @@ const productService = {
     }
   },
 
-  getById: async (id) => {
+getById: async (id) => {
     try {
       const apperClient = getApperClient();
       const response = await apperClient.getRecordById('product_c', parseInt(id), {
@@ -115,7 +114,7 @@ const productService = {
     }
   },
 
-  getByCategory: async (category) => {
+getByCategory: async (category) => {
     try {
       const apperClient = getApperClient();
       const response = await apperClient.fetchRecords('product_c', {
