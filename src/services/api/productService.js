@@ -43,6 +43,10 @@ const productService = {
 getAll: async () => {
     try {
       const apperClient = getApperClient();
+      if (!apperClient) {
+        console.error('ApperClient not initialized');
+        return [];
+      }
       const response = await apperClient.fetchRecords('product_c', {
         fields: [
           {"field": {"Name": "name_c"}},
@@ -78,6 +82,10 @@ getAll: async () => {
 getById: async (id) => {
     try {
       const apperClient = getApperClient();
+      if (!apperClient) {
+        console.error('ApperClient not initialized');
+        return null;
+      }
       const response = await apperClient.getRecordById('product_c', parseInt(id), {
         fields: [
           {"field": {"Name": "name_c"}},
@@ -117,6 +125,10 @@ getById: async (id) => {
 getByCategory: async (category) => {
     try {
       const apperClient = getApperClient();
+      if (!apperClient) {
+        console.error('ApperClient not initialized');
+        return [];
+      }
       const response = await apperClient.fetchRecords('product_c', {
         fields: [
           {"field": {"Name": "name_c"}},
@@ -157,6 +169,10 @@ getByCategory: async (category) => {
 getFeatured: async () => {
     try {
       const apperClient = getApperClient();
+      if (!apperClient) {
+        console.error('ApperClient not initialized');
+        return [];
+      }
       const response = await apperClient.fetchRecords('product_c', {
         fields: [
           {"field": {"Name": "name_c"}},
@@ -197,6 +213,10 @@ getFeatured: async () => {
 getTrending: async () => {
     try {
       const apperClient = getApperClient();
+      if (!apperClient) {
+        console.error('ApperClient not initialized');
+        return [];
+      }
       const response = await apperClient.fetchRecords('product_c', {
         fields: [
           {"field": {"Name": "name_c"}},
@@ -238,6 +258,10 @@ getTrending: async () => {
 search: async (query) => {
     try {
       const apperClient = getApperClient();
+      if (!apperClient) {
+        console.error('ApperClient not initialized');
+        return [];
+      }
       const response = await apperClient.fetchRecords('product_c', {
         fields: [
           {"field": {"Name": "name_c"}},
