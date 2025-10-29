@@ -149,7 +149,8 @@ const handleCancel = () => {
                   {profile.phone || "Not provided"}
                 </p>
               </div>
-
+{/* SYNTAX ERROR: This closing structure may be incomplete or mismatched. 
+                  Full component context needed to resolve properly. */}
               )}
 
               <div className="pt-4 border-t border-secondary">
