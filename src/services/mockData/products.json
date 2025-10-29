@@ -12,13 +12,17 @@
     ],
     "sizes": ["XS", "S", "M", "L", "XL"],
     "colors": ["Black", "Emerald", "Burgundy"],
+    "brand": "Elegance",
+    "style": "Evening",
+    "occasion": "Special Event",
+    "material": "Silk",
     "description": "Luxurious silk midi dress with elegant draping and timeless silhouette. Perfect for evening events and sophisticated occasions. Made from 100% pure silk with adjustable straps and hidden back zipper.",
     "inStock": true,
     "stockCount": 25,
     "featured": true,
     "trending": true
   },
-  {
+{
     "Id": 2,
     "name": "Cashmere Sweater",
     "category": "women",
@@ -30,13 +34,17 @@
     ],
     "sizes": ["XS", "S", "M", "L"],
     "colors": ["Cream", "Camel", "Navy"],
+    "brand": "Luxe",
+    "style": "Casual",
+    "occasion": "Daily Wear",
+    "material": "Cashmere",
     "description": "Premium cashmere crewneck sweater with ribbed trim. Soft, lightweight, and incredibly warm. Features relaxed fit perfect for layering or wearing solo.",
     "inStock": true,
     "stockCount": 18,
     "featured": true,
     "trending": false
   },
-  {
+{
     "Id": 3,
     "name": "Tailored Blazer",
     "category": "women",
@@ -48,13 +56,17 @@
     ],
     "sizes": ["XS", "S", "M", "L", "XL"],
     "colors": ["Black", "Charcoal", "Navy"],
+    "brand": "Classic",
+    "style": "Business",
+    "occasion": "Work",
+    "material": "Wool Blend",
     "description": "Structured wool-blend blazer with peak lapels and single-button closure. Contemporary tailoring with padded shoulders and functional pockets. Fully lined interior.",
     "inStock": true,
     "stockCount": 12,
     "featured": false,
     "trending": true
   },
-  {
+{
     "Id": 4,
     "name": "High-Waist Trousers",
     "category": "women",
@@ -66,13 +78,17 @@
     ],
     "sizes": ["24", "26", "28", "30", "32"],
     "colors": ["Black", "Gray", "Beige"],
+    "brand": "Modern",
+    "style": "Business",
+    "occasion": "Work",
+    "material": "Wool Blend",
     "description": "Classic high-waisted trousers with wide leg and pleated front. Crafted from premium wool blend with hidden side zipper and slash pockets.",
     "inStock": true,
     "stockCount": 30,
     "featured": false,
     "trending": false
   },
-  {
+{
     "Id": 5,
     "name": "Leather Ankle Boots",
     "category": "women",
@@ -84,13 +100,17 @@
     ],
     "sizes": ["6", "7", "8", "9", "10"],
     "colors": ["Black", "Brown"],
+    "brand": "Timeless",
+    "style": "Smart Casual",
+    "occasion": "Daily Wear",
+    "material": "Leather",
     "description": "Italian leather ankle boots with block heel and inside zipper. Cushioned insole for all-day comfort. Timeless design pairs with any outfit.",
     "inStock": true,
     "stockCount": 15,
     "featured": true,
     "trending": false
   },
-  {
+{
     "Id": 6,
     "name": "Structured Handbag",
     "category": "accessories",
@@ -102,13 +122,17 @@
     ],
     "sizes": ["One Size"],
     "colors": ["Black", "Tan", "Burgundy"],
+    "brand": "Refined",
+    "style": "Formal",
+    "occasion": "Work",
+    "material": "Leather",
     "description": "Structured leather handbag with top handles and adjustable crossbody strap. Interior features multiple compartments and zip pocket. Gold-tone hardware.",
     "inStock": true,
     "stockCount": 8,
     "featured": false,
     "trending": true
   },
-  {
+{
     "Id": 7,
     "name": "Oxford Shirt",
     "category": "men",
@@ -120,13 +144,17 @@
     ],
     "sizes": ["S", "M", "L", "XL", "XXL"],
     "colors": ["White", "Light Blue", "Pink"],
+    "brand": "Classic",
+    "style": "Business",
+    "occasion": "Work",
+    "material": "Cotton",
     "description": "Classic oxford button-down shirt in premium cotton. Features button-down collar, chest pocket, and back box pleat. Tailored fit.",
     "inStock": true,
     "stockCount": 40,
     "featured": true,
     "trending": false
   },
-  {
+{
     "Id": 8,
     "name": "Wool Overcoat",
     "category": "men",
@@ -138,13 +166,17 @@
     ],
     "sizes": ["S", "M", "L", "XL"],
     "colors": ["Charcoal", "Navy", "Camel"],
+    "brand": "Elegance",
+    "style": "Formal",
+    "occasion": "Evening",
+    "material": "Wool Blend",
     "description": "Double-breasted wool overcoat with notch lapels and side pockets. Fully lined with satin interior. Classic tailoring with contemporary fit.",
     "inStock": true,
     "stockCount": 10,
     "featured": true,
     "trending": true
   },
-  {
+{
     "Id": 9,
     "name": "Slim-Fit Chinos",
     "category": "men",
@@ -156,13 +188,17 @@
     ],
     "sizes": ["30", "32", "34", "36", "38"],
     "colors": ["Khaki", "Navy", "Olive"],
+    "brand": "Modern",
+    "style": "Smart Casual",
+    "occasion": "Weekend",
+    "material": "Cotton",
     "description": "Modern slim-fit chinos in stretch cotton blend. Features flat front, slant pockets, and button-through back pockets. Versatile wardrobe essential.",
     "inStock": true,
     "stockCount": 35,
     "featured": false,
     "trending": false
   },
-  {
+{
     "Id": 10,
     "name": "Leather Belt",
     "category": "accessories",
@@ -173,13 +209,17 @@
     ],
     "sizes": ["32", "34", "36", "38", "40"],
     "colors": ["Black", "Brown"],
+    "brand": "Timeless",
+    "style": "Everyday",
+    "occasion": "Daily Wear",
+    "material": "Leather",
     "description": "Full-grain leather belt with polished buckle. Classic width suitable for dress or casual wear. Made in Italy from premium leather.",
     "inStock": true,
     "stockCount": 50,
     "featured": false,
     "trending": false
   },
-  {
+{
     "Id": 11,
     "name": "Wrap Midi Skirt",
     "category": "women",
@@ -191,13 +231,17 @@
     ],
     "sizes": ["XS", "S", "M", "L"],
     "colors": ["Black", "Navy", "Terracotta"],
+    "brand": "Luxe",
+    "style": "Smart Casual",
+    "occasion": "Weekend",
+    "material": "Silk",
     "description": "Elegant wrap midi skirt with tie closure and A-line silhouette. Lightweight fabric with subtle sheen. Perfect for day-to-night transitions.",
     "inStock": true,
     "stockCount": 22,
     "featured": false,
     "trending": true
   },
-  {
+{
     "Id": 12,
     "name": "Cotton T-Shirt",
     "category": "men",
@@ -209,13 +253,17 @@
     ],
     "sizes": ["S", "M", "L", "XL", "XXL"],
     "colors": ["White", "Black", "Navy", "Gray"],
+    "brand": "Modern",
+    "style": "Casual",
+    "occasion": "Daily Wear",
+    "material": "Cotton",
     "description": "Premium cotton crewneck t-shirt with reinforced seams and ribbed collar. Soft, breathable fabric with excellent shape retention. Essential basic.",
     "inStock": true,
     "stockCount": 60,
     "featured": false,
     "trending": false
   },
-  {
+{
     "Id": 13,
     "name": "Sunglasses",
     "category": "accessories",
@@ -227,13 +275,17 @@
     ],
     "sizes": ["One Size"],
     "colors": ["Black", "Tortoise", "Gold"],
+    "brand": "Refined",
+    "style": "Casual",
+    "occasion": "Weekend",
+    "material": "Metal",
     "description": "Classic aviator sunglasses with UV400 protection. Metal frame with adjustable nose pads. Includes premium case and cleaning cloth.",
     "inStock": true,
     "stockCount": 28,
     "featured": false,
     "trending": true
   },
-  {
+{
     "Id": 14,
     "name": "Knit Cardigan",
     "category": "women",
@@ -245,13 +297,17 @@
     ],
     "sizes": ["XS", "S", "M", "L", "XL"],
     "colors": ["Cream", "Black", "Sage"],
+    "brand": "Luxe",
+    "style": "Casual",
+    "occasion": "Daily Wear",
+    "material": "Cotton",
     "description": "Soft knit cardigan with button front and ribbed trim. Relaxed fit with dropped shoulders. Perfect layering piece for any season.",
     "inStock": true,
     "stockCount": 20,
     "featured": false,
     "trending": false
   },
-  {
+{
     "Id": 15,
     "name": "Denim Jacket",
     "category": "men",
@@ -263,13 +319,17 @@
     ],
     "sizes": ["S", "M", "L", "XL", "XXL"],
     "colors": ["Light Wash", "Dark Wash", "Black"],
+    "brand": "Classic",
+    "style": "Casual",
+    "occasion": "Weekend",
+    "material": "Denim",
     "description": "Classic denim jacket in premium cotton denim. Features button front, chest pockets, and adjustable waist tabs. Timeless style that never goes out of fashion.",
     "inStock": true,
     "stockCount": 32,
     "featured": false,
     "trending": true
   },
-  {
+{
     "Id": 16,
     "name": "Silk Scarf",
     "category": "accessories",
@@ -280,6 +340,10 @@
     ],
     "sizes": ["One Size"],
     "colors": ["Multi", "Navy", "Burgundy"],
+    "brand": "Elegance",
+    "style": "Formal",
+    "occasion": "Special Event",
+    "material": "Silk",
     "description": "Luxurious silk scarf with hand-rolled edges. Features elegant print design. Versatile accessory that adds sophistication to any outfit.",
     "inStock": true,
     "stockCount": 15,
