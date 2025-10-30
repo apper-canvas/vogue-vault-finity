@@ -6,7 +6,7 @@ import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Select from "@/components/atoms/Select";
 import { useCart } from "@/hooks/useCart";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/layouts/Root";
 import orderService from "@/services/api/orderService";
 const CheckoutPage = () => {
   const navigate = useNavigate();

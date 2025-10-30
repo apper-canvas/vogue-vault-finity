@@ -7,7 +7,7 @@ import Badge from "@/components/atoms/Badge";
 import SearchBar from "@/components/molecules/SearchBar";
 import { useCart } from "@/hooks/useCart";
 import { useWishlist } from "@/hooks/useWishlist";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/layouts/Root";
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);

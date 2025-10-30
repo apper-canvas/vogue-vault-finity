@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/layouts/Root";
 
 const LoginPage = () => {
   const navigate = useNavigate();

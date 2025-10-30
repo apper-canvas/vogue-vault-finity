@@ -5,7 +5,7 @@ import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/layouts/Root";
 import userService from "@/services/api/userService";
 
 const ProfilePage = () => {
