@@ -35,11 +35,9 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.875rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
-
 .Toastify__toast--success {
-  background-color: #2d6a4f;
+  background-color: #52b788;
 }
-
 .Toastify__toast--error {
   background-color: #c1121f;
 }
