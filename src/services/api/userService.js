@@ -1,90 +1,95 @@
-import { getApperClient } from "@/services/apperClient";
+import usersData from "../mockData/users.json";
+import authService from "./authService";
 
-const transformUser = (user) => {
-  if (!user) return null;
-  return {
-    ...user,
-    email: user.email_c,
-    firstName: user.first_name_c,
-    lastName: user.last_name_c,
-    phone: user.phone_c,
-    createdAt: user.CreatedOn
-  };
-};
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const userService = {
-  getProfile: async (userId) => {
-    try {
-      if (!userId) {
-        throw new Error("User not authenticated");
-      }
-
-      const apperClient = getApperClient();
-      const response = await apperClient.getRecordById('user_c', parseInt(userId), {
-        fields: [
-          {"field": {"Name": "email_c"}},
-          {"field": {"Name": "first_name_c"}},
-          {"field": {"Name": "last_name_c"}},
-          {"field": {"Name": "phone_c"}},
-          {"field": {"Name": "CreatedOn"}}
-        ]
-      });
-
-      if (!response.success) {
-        throw new Error(response.message);
-      }
-
-      if (!response.data) {
-        throw new Error("User not found");
-      }
-
-      return transformUser(response.data);
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      throw error;
+  getProfile: async () => {
+    await delay(300);
+    
+    const currentUser = authService.getCurrentUser();
+    if (!currentUser) {
+      throw new Error("User not authenticated");
     }
+    
+    const user = usersData.find((u) => u.Id === currentUser.Id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    
+    const { password: _, ...userProfile } = user;
+    return userProfile;
   },
 
-  updateProfile: async (userId, profileData) => {
-    try {
-      if (!userId) {
-        throw new Error("User not authenticated");
-      }
-
-      const apperClient = getApperClient();
-      const updateData = {};
-      
-      if (profileData.firstName !== undefined) updateData.first_name_c = profileData.firstName;
-      if (profileData.lastName !== undefined) updateData.last_name_c = profileData.lastName;
-      if (profileData.phone !== undefined) updateData.phone_c = profileData.phone;
-
-      const response = await apperClient.updateRecord('user_c', {
-        records: [{
-          Id: parseInt(userId),
-          ...updateData
-        }]
-      });
-
-      if (!response.success) {
-        throw new Error(response.message);
-      }
-
-      if (response.results) {
-        const failed = response.results.filter(r => !r.success);
-        if (failed.length > 0) {
-          console.error(`Failed to update profile:`, failed);
-          throw new Error(failed[0].message || "Failed to update profile");
-        }
-        
-        const updated = response.results.find(r => r.success);
-        return transformUser(updated.data);
-      }
-
-      return transformUser(response.data);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      throw error;
+  updateProfile: async (profileData) => {
+    await delay(400);
+    
+    const currentUser = authService.getCurrentUser();
+    if (!currentUser) {
+      throw new Error("User not authenticated");
     }
+    
+    const userIndex = usersData.findIndex((u) => u.Id === currentUser.Id);
+    if (userIndex === -1) {
+      throw new Error("User not found");
+    }
+    
+    usersData[userIndex] = {
+      ...usersData[userIndex],
+      ...profileData,
+      Id: currentUser.Id,
+      email: currentUser.email,
+      password: usersData[userIndex].password
+    };
+    
+    const { password: _, ...updatedUser } = usersData[userIndex];
+    
+    try {
+      localStorage.setItem("vogue_vault_user_session", JSON.stringify(updatedUser));
+    } catch (error) {
+      console.error("Error updating user session:", error);
+    }
+    
+    return updatedUser;
+  },
+
+  getAddresses: async () => {
+    await delay(200);
+    
+    const profile = await userService.getProfile();
+    return profile.addresses || [];
+  },
+
+  addAddress: async (address) => {
+    await delay(300);
+    
+    const currentUser = authService.getCurrentUser();
+    if (!currentUser) {
+      throw new Error("User not authenticated");
+    }
+    
+    const userIndex = usersData.findIndex((u) => u.Id === currentUser.Id);
+    if (userIndex === -1) {
+      throw new Error("User not found");
+    }
+    
+    const newAddress = {
+      Id: Date.now(),
+      ...address,
+      isDefault: usersData[userIndex].addresses.length === 0
+    };
+    
+    usersData[userIndex].addresses.push(newAddress);
+    
+    const { password: _, ...updatedUser } = usersData[userIndex];
+    
+    try {
+      localStorage.setItem("vogue_vault_user_session", JSON.stringify(updatedUser));
+    } catch (error) {
+      console.error("Error updating user session:", error);
+    }
+    
+    return newAddress;
   }
 };
 

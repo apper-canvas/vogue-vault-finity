@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 import ApperIcon from "@/components/ApperIcon";
 import Badge from "@/components/atoms/Badge";
 import SearchBar from "@/components/molecules/SearchBar";
@@ -16,8 +15,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { getCartCount } = useCart();
   const { wishlist } = useWishlist();
-const { user } = useSelector((state) => state.user);
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const cartCount = getCartCount();
 
   const navItems = [
@@ -119,13 +117,13 @@ const { user } = useSelector((state) => state.user);
                       exit={{ opacity: 0, y: -10 }}
                       className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-secondary py-2 z-50"
                     >
-{user ? (
+                      {user ? (
                         <>
                           <div className="px-4 py-2 border-b border-secondary">
                             <p className="font-semibold text-primary">
-                              {user.first_name_c} {user.last_name_c}
+                              {user.firstName} {user.lastName}
                             </p>
-                            <p className="text-sm text-primary/60">{user.email_c}</p>
+                            <p className="text-sm text-primary/60">{user.email}</p>
                           </div>
                           <Link
                             to="/account"
@@ -252,11 +250,11 @@ const { user } = useSelector((state) => state.user);
                 <div className="mt-8 pt-8 border-t border-secondary space-y-4">
                   {user ? (
                     <>
-<div className="px-4 py-2 bg-secondary rounded-lg">
+                      <div className="px-4 py-2 bg-secondary rounded-lg">
                         <p className="font-semibold text-primary">
-                          {user.first_name_c} {user.last_name_c}
+                          {user.firstName} {user.lastName}
                         </p>
-                        <p className="text-sm text-primary/60">{user.email_c}</p>
+                        <p className="text-sm text-primary/60">{user.email}</p>
                       </div>
                       <Link
                         to="/account"

@@ -10,25 +10,25 @@ export const useWishlist = () => {
   }, []);
 
   const addToWishlist = (productId) => {
-if (wishlist.includes(productId)) {
+    if (wishlist.includes(productId)) {
       return;
     }
-const newWishlist = [...wishlist, productId];
+    const newWishlist = [...wishlist, productId];
     setWishlist(newWishlist);
     wishlistStorage.set(newWishlist);
   };
 
   const removeFromWishlist = (productId) => {
-const newWishlist = wishlist.filter((id) => id !== productId);
+    const newWishlist = wishlist.filter((id) => id !== productId);
     setWishlist(newWishlist);
     wishlistStorage.set(newWishlist);
   };
 
   const isInWishlist = (productId) => {
-return wishlist.includes(productId);
+    return wishlist.includes(productId);
   };
 
-const toggleWishlist = (productId) => {
+  const toggleWishlist = (productId) => {
     if (isInWishlist(productId)) {
       removeFromWishlist(productId);
     } else {

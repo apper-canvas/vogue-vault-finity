@@ -22,7 +22,7 @@ const SearchBar = ({ onClose }) => {
       }
 
       setLoading(true);
-try {
+      try {
         const searchResults = await productService.search(query);
         setResults(searchResults.slice(0, 5));
       } catch (error) {
@@ -67,12 +67,12 @@ try {
             <div className="divide-y divide-secondary">
               {results.map((product) => (
                 <div
-key={product.Id}
+                  key={product.Id}
                   className="p-4 flex items-center gap-4 hover:bg-secondary cursor-pointer transition-colors duration-200"
                   onClick={() => handleProductClick(product.Id)}
                 >
                   <img
-                    src={product.images?.[0]}
+                    src={product.images[0]}
                     alt={product.name}
                     className="w-16 h-16 object-cover rounded"
                   />
@@ -81,7 +81,7 @@ key={product.Id}
                     <p className="text-sm text-primary/60">{product.category}</p>
                   </div>
                   <p className="font-display font-semibold text-accent">
-                    ${product.price?.toFixed(2)}
+                    ${product.price.toFixed(2)}
                   </p>
                 </div>
               ))}

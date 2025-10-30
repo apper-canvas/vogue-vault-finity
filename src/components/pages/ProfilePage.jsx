@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import userService from "@/services/api/userService";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
+import { useAuth } from "@/hooks/useAuth";
+import userService from "@/services/api/userService";
 
 const ProfilePage = () => {
-const { user } = useSelector((state) => state.user);
+  const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -23,16 +23,14 @@ const { user } = useSelector((state) => state.user);
   });
 
   useEffect(() => {
-    if (user?.Id) {
-      loadProfile();
-    }
-  }, [user]);
+    loadProfile();
+  }, []);
 
   const loadProfile = async () => {
     try {
       setLoading(true);
       setError(null);
-      const userProfile = await userService.getProfile(user.Id);
+      const userProfile = await userService.getProfile();
       setProfile(userProfile);
       setFormData({
         firstName: userProfile.firstName || "",
@@ -55,7 +53,7 @@ const { user } = useSelector((state) => state.user);
     });
   };
 
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.firstName || !formData.lastName || !formData.email) {
@@ -66,7 +64,7 @@ const handleSubmit = async (e) => {
     setSaving(true);
 
     try {
-      const updatedProfile = await userService.updateProfile(user.Id, formData);
+      const updatedProfile = await userService.updateProfile(formData);
       setProfile(updatedProfile);
       setIsEditing(false);
       toast.success("Profile updated successfully!");
@@ -77,7 +75,7 @@ const handleSubmit = async (e) => {
     }
   };
 
-const handleCancel = () => {
+  const handleCancel = () => {
     setFormData({
       firstName: profile.firstName || "",
       lastName: profile.lastName || "",
@@ -110,47 +108,79 @@ const handleCancel = () => {
           )}
         </div>
 
-<div className="bg-white rounded-lg p-8">
+        <div className="bg-white rounded-lg p-8">
           {!isEditing ? (
-            <>
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="text-sm text-primary/60 block mb-2">
-                      First Name
-                    </label>
-                    <p className="text-lg font-medium text-primary">
-                      {profile.firstName}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-sm text-primary/60 block mb-2">
-                      Last Name
-                    </label>
-                    <p className="text-lg font-medium text-primary">
-                      {profile.lastName}
-                    </p>
-                  </div>
-                </div>
-
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="text-sm text-primary/60 block mb-2">
-                    Email
+                    First Name
                   </label>
                   <p className="text-lg font-medium text-primary">
-                    {profile.email}
+                    {profile.firstName}
                   </p>
                 </div>
-
                 <div>
                   <label className="text-sm text-primary/60 block mb-2">
-                    Phone
+                    Last Name
                   </label>
                   <p className="text-lg font-medium text-primary">
-                    {profile.phone || "Not provided"}
+                    {profile.lastName}
                   </p>
                 </div>
               </div>
+
+              <div>
+                <label className="text-sm text-primary/60 block mb-2">
+                  Email
+                </label>
+                <p className="text-lg font-medium text-primary">
+                  {profile.email}
+                </p>
+              </div>
+
+              <div>
+                <label className="text-sm text-primary/60 block mb-2">
+                  Phone
+                </label>
+                <p className="text-lg font-medium text-primary">
+                  {profile.phone || "Not provided"}
+                </p>
+              </div>
+
+              {profile.addresses && profile.addresses.length > 0 && (
+                <div>
+                  <label className="text-sm text-primary/60 block mb-3">
+                    Saved Addresses
+                  </label>
+                  <div className="space-y-3">
+                    {profile.addresses.map((address) => (
+                      <div
+                        key={address.Id}
+                        className="border border-secondary rounded-lg p-4"
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <p className="font-semibold text-primary">
+                            {address.firstName} {address.lastName}
+                          </p>
+                          {address.isDefault && (
+                            <span className="text-xs bg-accent/10 text-accent px-2 py-1 rounded">
+                              Default
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-primary/60 text-sm">
+                          <p>{address.address}</p>
+                          <p>
+                            {address.city}, {address.state} {address.zipCode}
+                          </p>
+                          <p>{address.country}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="pt-4 border-t border-secondary">
                 <p className="text-sm text-primary/60">
@@ -162,7 +192,7 @@ const handleCancel = () => {
                   })}
                 </p>
               </div>
-            </>
+            </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

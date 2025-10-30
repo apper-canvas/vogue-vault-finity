@@ -1,32 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAuth } from "@/hooks/useAuth";
-import orderService from "@/services/api/orderService";
 import ApperIcon from "@/components/ApperIcon";
-import Badge from "@/components/atoms/Badge";
 import Button from "@/components/atoms/Button";
+import Badge from "@/components/atoms/Badge";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
+import { useAuth } from "@/hooks/useAuth";
+import orderService from "@/services/api/orderService";
 
 const AccountPage = () => {
-const { user } = useSelector((state) => state.user);
+  const { user } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (user?.Id) {
-      loadOrders();
-    }
-  }, [user]);
+    loadOrders();
+  }, []);
 
   const loadOrders = async () => {
     try {
       setLoading(true);
       setError(null);
-      const userOrders = await orderService.getUserOrders(user.Id);
+      const userOrders = await orderService.getUserOrders();
       setOrders(userOrders.slice(0, 3));
     } catch (err) {
       setError(err.message);
@@ -52,7 +49,7 @@ const { user } = useSelector((state) => state.user);
             My Account
           </h1>
           <p className="text-primary/60">
-Welcome back, {user?.first_name_c || "Valued Customer"}!
+            Welcome back, {user?.firstName || "Valued Customer"}!
           </p>
         </div>
 
@@ -87,14 +84,14 @@ Welcome back, {user?.first_name_c || "Valued Customer"}!
                 <div className="space-y-4">
                   {orders.map((order) => (
                     <Link
-key={order.Id}
+                      key={order.Id}
                       to={`/orders`}
                       className="block border border-secondary rounded-lg p-4 hover:border-accent transition-colors duration-200"
                     >
                       <div className="flex items-center justify-between mb-3">
                         <div>
                           <p className="font-semibold text-primary">
-Order #{order.orderNumber}
+                            Order #{order.orderNumber}
                           </p>
                           <p className="text-sm text-primary/60">
                             {new Date(order.createdAt).toLocaleDateString()}
@@ -114,10 +111,10 @@ Order #{order.orderNumber}
                       </div>
                       <div className="flex items-center justify-between">
                         <p className="text-primary/60">
-{order.items?.length || 0} item(s)
+                          {order.items.length} item(s)
                         </p>
                         <p className="font-semibold text-accent">
-                          ${order.total?.toFixed(2)}
+                          ${order.total.toFixed(2)}
                         </p>
                       </div>
                     </Link>
@@ -136,17 +133,17 @@ Order #{order.orderNumber}
                 <div>
                   <p className="text-sm">Name</p>
                   <p className="font-medium text-primary">
-{user?.first_name_c} {user?.last_name_c}
+                    {user?.firstName} {user?.lastName}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm">Email</p>
-                  <p className="font-medium text-primary">{user?.email_c}</p>
+                  <p className="font-medium text-primary">{user?.email}</p>
                 </div>
-                {user?.phone_c && (
+                {user?.phone && (
                   <div>
                     <p className="text-sm">Phone</p>
-                    <p className="font-medium text-primary">{user.phone_c}</p>
+                    <p className="font-medium text-primary">{user.phone}</p>
                   </div>
                 )}
               </div>

@@ -4,15 +4,15 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-theme: {
+  theme: {
     extend: {
       colors: {
-        primary: "#52b788",
+        primary: "#1a1a1a",
         secondary: "#f5f5f5",
-        accent: "#95d5b2",
+        accent: "#d4a574",
         surface: "#ffffff",
         background: "#fafafa",
-        success: "#52b788",
+        success: "#2d6a4f",
         warning: "#f77f00",
         error: "#c1121f",
         info: "#4a5568"

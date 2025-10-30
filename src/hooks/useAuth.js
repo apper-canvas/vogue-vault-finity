@@ -1,24 +1,42 @@
-import { useSelector, useDispatch } from "react-redux";
-import { clearUser } from "@/store/userSlice";
+import { useState, useEffect } from "react";
+import authService from "@/services/api/authService";
+
 export const useAuth = () => {
-const dispatch = useDispatch();
-  const { user, isAuthenticated, isInitialized } = useSelector((state) => state.user);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const currentUser = authService.getCurrentUser();
+    setUser(currentUser);
+    setLoading(false);
+  }, []);
+
+  const login = async (email, password) => {
+    const loggedInUser = await authService.login(email, password);
+    setUser(loggedInUser);
+    return loggedInUser;
+  };
+
+  const register = async (userData) => {
+    const newUser = await authService.register(userData);
+    setUser(newUser);
+    return newUser;
+  };
 
   const logout = async () => {
-    try {
-      if (window.ApperSDK?.ApperUI) {
-        await window.ApperSDK.ApperUI.logout();
-      }
-      dispatch(clearUser());
-    } catch (error) {
-      console.error("Logout error:", error);
-      dispatch(clearUser());
-    }
+    await authService.logout();
+    setUser(null);
+  };
+
+  const isAuthenticated = () => {
+    return user !== null;
   };
 
   return {
     user,
-    loading: !isInitialized,
+    loading,
+    login,
+    register,
     logout,
     isAuthenticated
   };
